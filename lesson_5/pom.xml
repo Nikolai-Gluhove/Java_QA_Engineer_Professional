@@ -15,8 +15,10 @@
         <assertj.version>3.24.2</assertj.version>
 
         <surefire.plugin.version>2.22.2</surefire.plugin.version>
-        <browser>chrome</browser>
         <checkstyle.version>3.3.0</checkstyle.version>
+
+        <browser>chrome</browser>
+        <base.url/>
     </properties>
 
     <dependencies>
@@ -50,10 +52,22 @@
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
         </dependency>
-
-
-
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <base.url>https://otus.ru</base.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <base.url/>
+            </properties>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
@@ -65,6 +79,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <browser>${browser}</browser>
+                        <base.url>${base.url}</base.url>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
