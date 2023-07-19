@@ -5,8 +5,12 @@ import annotations.Template;
 import annotations.UrlTemplates;
 import exceptions.PathEmptyException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pageobject.AbsPageObject;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbsBasePage<T> extends AbsPageObject {
 
@@ -15,6 +19,16 @@ public abstract class AbsBasePage<T> extends AbsPageObject {
 //    {
 //        waiters.waitForCondition(ExpectedConditions.visibilityOf());
 //    }
+
+    @FindBy(tagName = "h1")
+    private WebElement header;
+
+    public  T pageHeaderShouldBeVisible(){
+        assertThat(waiters.waitForElementVisible(header))
+                .as("Header should be visible")
+                .isTrue();
+        return (T)this;
+    }
 
     public AbsBasePage(WebDriver driver) {
         super(driver);
@@ -42,6 +56,8 @@ public abstract class AbsBasePage<T> extends AbsPageObject {
 
         return (T) this;
     }
+
+
 
     private T open(String name, String[] params){
         Class<? extends AbsBasePage> clazz = this.getClass();

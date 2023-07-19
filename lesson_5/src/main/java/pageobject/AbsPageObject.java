@@ -2,6 +2,7 @@ package pageobject;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.PageFactory;
 import waiters.Waiters;
 
 import javax.swing.*;
@@ -16,5 +17,7 @@ public abstract class AbsPageObject {
         this.driver = driver;
         this.actions = new Actions(driver);
         this.waiters = new Waiters(driver);
+
+        PageFactory.initElements(driver, this);
     }
 }
